@@ -33,8 +33,6 @@ class ButtonOverSprite extends flash.display.Sprite {
 class Clippy {
   // Main
   static function main() {
-    var text:String = flash.Lib.current.loaderInfo.parameters.text;
-    
     // label
     var label:TextField = new TextField();
     var format:TextFormat = new TextFormat("Arial", 10);
@@ -56,6 +54,8 @@ class Clippy {
     button.hitTestState = new ButtonDownSprite();
     
     button.addEventListener(MouseEvent.MOUSE_UP, function(e:MouseEvent) {
+      // load inside event handler so that it can pick up parameter changes
+      var text = ExternalInterface.call(flash.Lib.current.loaderInfo.parameters.func);
       flash.system.System.setClipboard(text);
       label.text = "copied!";
       label.setTextFormat(format);
